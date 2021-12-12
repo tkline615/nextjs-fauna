@@ -1,4 +1,5 @@
 import { useEffect, useState } from "react";
+import CustomerData from "../components/customerData";
 import {
   Heading,
   Flex,
@@ -9,7 +10,8 @@ import {
   FormControl,
   FormLabel,
   RadioGroup,
-  Radio
+  Radio,
+  Text
 } from "@chakra-ui/core";
 
 export default function Home() {
@@ -27,9 +29,32 @@ export default function Home() {
       <Heading as="h1" my={2} textAlign="center">
         NextJS, FaunaDB, and Serverless
       </Heading>
-      <Heading as="h3" my={2} textAlign="center">
+      <Heading as="h2" my={2} textAlign="center">
         Customer Data
       </Heading>
+      <Flex mt={12} align="center" justify="center">
+        <Stack>
+            <Heading mb={6} as="h2">
+              Name:
+            </Heading>
+            <Heading mb={6} as="h2">
+              Phone:
+            </Heading>
+            <Heading mb={6} as="h2">
+              Credit Card:
+            </Heading>
+        </Stack>
+        {data.length > 0 ? (
+          data.map((d) => (
+            <CustomerData key={d.data.telephone} creditCard={d.data.creditCard.number} firstName={d.data.firstName} lastName={d.data.lastName} telephone={d.data.telephone} 
+            />
+          ))
+        ) : (
+          <>
+            <Text>Loading</Text>
+          </>
+        )}
+      </Flex>
     </Box>
   );
 }
