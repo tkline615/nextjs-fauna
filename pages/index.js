@@ -15,7 +15,22 @@ import {
 } from "@chakra-ui/core";
 
 export default function Home() {
+
+  const initialFormData = Object.freeze({
+    firstName: "",
+    lastName: "",
+    streetAddress: "", 
+    city: "",
+    state: "",
+    zipCode: "",
+    phoneNumber: "",
+    cardType: "",
+    cardNumber: null
+  });
+  
   const [data, setData] = useState([]);
+  const [formData, updateFormData] = useState({});
+
   async function getData() {
     const res = await fetch("/api/getCustomers");
     const newData = await res.json();
@@ -24,6 +39,19 @@ export default function Home() {
   useEffect(() => {
     getData();
   }, []);
+
+const handleChange = (e) => {
+  updateFormData( {
+    ...formData,
+    [e.target.name]: e.target.value 
+  })
+}
+
+const handleSubmit = (e) => {
+  e.preventDefault;
+  addCustomer();
+}
+
   return (
     <Box>
       <Heading as="h1" my={2} textAlign="center">
@@ -54,6 +82,16 @@ export default function Home() {
             <Text>Loading</Text>
           </>
         )}
+      </Flex>
+      <Heading as="h4" mt={6} textAlign="center">
+        Add a new customer
+      </Heading>
+      <Flex mt={12} align="center" justify="center">
+        <form onSubmit={handleSubmit} method="post">
+          <FormControl onChange={handleChange}>
+
+          </FormControl>
+        </form>
       </Flex>
     </Box>
   );
